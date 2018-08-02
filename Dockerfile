@@ -1,47 +1,30 @@
-FROM golang:1.10.3-alpine
+FROM amd64/ubuntu:devel
 
-RUN apk add --no-cache --virtual .fetch-deps ca-certificates tar
+ENV DEBIAN_FRONTEND noninteractive
 
-RUN apk add --no-cache openssl pkgconfig g++
-
-RUN mkdir -p /root/librdkafka
-WORKDIR /root/librdkafka
-
-RUN wget -O "librdkafka.tar.gz" "https://github.com/edenhill/librdkafka/archive/master.tar.gz"
-
-RUN mkdir -p librdkafka
-
-RUN tar \
-  --extract \
-  --file "librdkafka.tar.gz" \
-  --directory "librdkafka" \
-  --strip-components 1
-
-RUN apk add --no-cache --virtual .build-deps \
-  bash \
-  openssl-dev \
+RUN apt-get update \
+  && apt-get upgrade -y \
+  && apt-get install -y --no-install-recommends \
+  librdkafka-dev \
+  golang \
+  pkg-config \
+  gcc \
+  g++ \
+  libc6-dev \
   make \
-  musl-dev \
-  zlib-dev \
-  python
+  xz-utils \
+  software-properties-common \
+  && apt-get clean \
+  && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
-RUN cd "librdkafka" && \
-  ./configure --prefix=/usr && \
-  make -j "$(getconf _NPROCESSORS_ONLN)" && \
-  make install
+RUN mkdir /go
 
-RUN runDeps="$( \
-  scanelf --needed --nobanner --recursive /usr/local \
-  | awk '{ gsub(/,/, "\nso:", $2); print "so:" $2 }' \
-  | sort -u \
-  | xargs -r apk info --installed \
-  | sort -u \
-  )" && \
-  apk add --no-cache --virtual .librdkafka-rundeps \
-  $runDeps
+ENV GOPATH /go
+RUN export GOOS="$(go env GOOS)"
+ENV export GOARCH="$(go env GOARCH)"
+ENV export GOHOSTOS="$(go env GOHOSTOS)"
+ENV export GOHOSTARCH="$(go env GOHOSTARCH)"
+ENV PATH "$GOPATH/bin:/usr/local/go/bin:$PATH"
 
-RUN cd / && \
-  apk del .fetch-deps .build-deps && \
-  rm -rf /root/librdkafka
-
-RUN mkdir /lib64 && ln -s /lib/libc.musl-x86_64.so.1 /lib64/ld-linux-x86-64.so.2
+RUN mkdir -p "$GOPATH/src" "$GOPATH/bin" && chmod -R 777 "$GOPATH"
+WORKDIR $GOPATH
