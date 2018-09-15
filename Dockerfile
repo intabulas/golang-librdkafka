@@ -10,7 +10,9 @@ RUN apt-get update \
   pkg-config \
   gcc \
   g++ \
+  git \
   libc6-dev \
+  libpcre++-dev \
   make \
   xz-utils \
   software-properties-common \
@@ -27,4 +29,5 @@ ENV export GOHOSTARCH="$(go env GOHOSTARCH)"
 ENV PATH "$GOPATH/bin:/usr/local/go/bin:$PATH"
 
 RUN mkdir -p "$GOPATH/src" "$GOPATH/bin" && chmod -R 777 "$GOPATH"
+RUN go get -u github.com/golang/dep/cmd/dep
 WORKDIR $GOPATH
