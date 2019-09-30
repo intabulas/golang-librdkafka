@@ -35,4 +35,5 @@ ENV export GOHOSTARCH="$(go env GOHOSTARCH)"
 
 RUN mkdir -p "$GOPATH/src" "$GOPATH/bin" && chmod -R 777 "$GOPATH"
 RUN go get -u github.com/golang/dep/cmd/dep
+RUN go get -u github.com/goreleaser/nfpm/...
 WORKDIR $GOPATH
