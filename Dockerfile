@@ -34,8 +34,8 @@ RUN wget https://github.com/edenhill/librdkafka/archive/v1.8.2.tar.gz \
   && make install
 
 
-RUN curl -O https://dl.google.com/go/go1.18.linux-amd64.tar.gz \
-  && tar -xvf go1.18.linux-amd64.tar.gz \
+RUN curl -O https://dl.google.com/go/go1.18.1.linux-amd64.tar.gz \
+  && tar -xvf go1.18.1.linux-amd64.tar.gz \
   && mv go /usr/local
 
 RUN mkdir /go
