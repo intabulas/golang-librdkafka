@@ -46,8 +46,8 @@ ENV export GOARCH="$(go env GOARCH)"
 ENV export GOHOSTOS="$(go env GOHOSTOS)"
 ENV export GOHOSTARCH="$(go env GOHOSTARCH)"
 
-RUN curl -fsSLO --compressed "https://github.com/goreleaser/nfpm/releases/download/v2.35.2/nfpm_2.35.2_Linux_x86_64.tar.gz" \
-  && tar -xzvf "nfpm_2.35.2_Linux_x86_64.tar.gz" -C /usr/local/bin  --no-same-owner
+RUN curl -fsSLO --compressed "https://github.com/goreleaser/nfpm/releases/download/v2.35.3/nfpm_2.35.3_Linux_x86_64.tar.gz" \
+  && tar -xzvf "nfpm_2.35.3_Linux_x86_64.tar.gz" -C /usr/local/bin  --no-same-owner
 
 RUN mkdir -p "$GOPATH/src" "$GOPATH/bin" && chmod -R 777 "$GOPATH"
 
