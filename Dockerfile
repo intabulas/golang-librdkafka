@@ -25,16 +25,16 @@ RUN apt-get update \
   && apt-get clean \
   && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
-RUN wget https://github.com/confluentinc/librdkafka/archive/v2.3.0.tar.gz \
-  && tar -xvf v2.3.0.tar.gz  \
-  && cd librdkafka-2.3.0 \
+RUN wget https://github.com/confluentinc/librdkafka/archive/v2.4.0.tar.gz \
+  && tar -xvf v2.4.0.tar.gz  \
+  && cd librdkafka-2.4.0 \
   && ./configure --install-deps \
   && make \
   && make install
 
 
-RUN curl -O https://dl.google.com/go/go1.22.2.linux-amd64.tar.gz \
-  && tar -xvf go1.22.2.linux-amd64.tar.gz \
+RUN curl -O https://dl.google.com/go/go1.22.3.linux-amd64.tar.gz \
+  && tar -xvf go1.22.3.linux-amd64.tar.gz \
   && mv go /usr/local
 
 RUN mkdir /go
