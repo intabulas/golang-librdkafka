@@ -33,8 +33,8 @@ RUN wget https://github.com/confluentinc/librdkafka/archive/v2.4.0.tar.gz \
   && make install
 
 
-RUN curl -O https://dl.google.com/go/go1.22.3.linux-amd64.tar.gz \
-  && tar -xvf go1.22.3.linux-amd64.tar.gz \
+RUN curl -O https://dl.google.com/go/go1.22.4.linux-amd64.tar.gz \
+  && tar -xvf go1.22.4.linux-amd64.tar.gz \
   && mv go /usr/local
 
 RUN mkdir /go
@@ -46,8 +46,8 @@ ENV export GOARCH="$(go env GOARCH)"
 ENV export GOHOSTOS="$(go env GOHOSTOS)"
 ENV export GOHOSTARCH="$(go env GOHOSTARCH)"
 
-RUN curl -fsSLO --compressed "https://github.com/goreleaser/nfpm/releases/download/v2.36.1/nfpm_2.36.1_Linux_x86_64.tar.gz" \
-  && tar -xzvf "nfpm_2.36.1_Linux_x86_64.tar.gz" -C /usr/local/bin  --no-same-owner
+RUN curl -fsSLO --compressed "https://github.com/goreleaser/nfpm/releases/download/v2.37.1/nfpm_2.37.1_Linux_x86_64.tar.gz" \
+  && tar -xzvf "nfpm_2.37.1_Linux_x86_64.tar.gz" -C /usr/local/bin  --no-same-owner
 
 RUN mkdir -p "$GOPATH/src" "$GOPATH/bin" && chmod -R 777 "$GOPATH"
 
